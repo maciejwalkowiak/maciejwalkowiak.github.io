@@ -4,7 +4,25 @@ import Link from 'gatsby-link'
 import get from 'lodash/get'
 
 import Bio from '../components/Bio'
-import { rhythm, scale } from '../utils/typography'
+import PageTop from '../components/PageTop'
+import Footer from '../components/Footer'
+import Container from '../components/Container'
+import Hero from '../components/Hero'
+import styled from 'styled-components';
+
+const Paragraph = styled.p`
+    line-height: 1.5rem;
+    font-size: 1rem;
+    color: #212121;
+`;
+
+const Date = styled.p`
+  font-size: 0.8rem;
+  display: block;
+  margin: 10px 0;
+  color: #757575;
+  
+`;
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -12,27 +30,22 @@ class BlogPostTemplate extends React.Component {
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
 
     return (
-      <div>
+        <div>
+            <PageTop>
+                <Hero text={post.frontmatter.title} />
+            </PageTop>
+      <Container>
+
         <Helmet title={`${post.frontmatter.title} | ${siteTitle}`} />
-        <h1>{post.frontmatter.title}</h1>
-        <p
-          style={{
-            ...scale(-1 / 5),
-            display: 'block',
-            marginBottom: rhythm(1),
-            marginTop: rhythm(-1),
-          }}
-        >
+        <Date>
           {post.frontmatter.date}
-        </p>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <hr
-          style={{
-            marginBottom: rhythm(1),
-          }}
-        />
+        </Date>
+        <Paragraph dangerouslySetInnerHTML={{ __html: post.html }} />
+        <hr/>
         <Bio />
-      </div>
+          <Footer />
+      </Container>
+        </div>
     )
   }
 }
